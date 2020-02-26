@@ -1,0 +1,45 @@
+version: '3'
+services:
+
+  elasticsearch:
+    image: elasticsearch:7.6.0
+    container_name: elasticsearch
+    environment:
+      - cluster.name=elk-cluster-sandbox
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    networks:
+      - elk-cluster-sandbox
+
+  kibana:
+    image: kibana:7.6.0
+    container_name: kibana
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk-cluster-sandbox
+
+  logstash:
+    image: logstash:7.6.0
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk-cluster-sandbox
+    volumes:
+      - ./example-logs/:/example-logs
+      - ./logstash/:/usr/share/logstash/pipeline/
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.6.0
+    container_name: metricbeat
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk-cluster-sandbox
+
+networks:
+  elk-cluster-sandbox:
