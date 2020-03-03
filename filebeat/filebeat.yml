@@ -1,0 +1,19 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/example/*.json
+    processors:
+      - decode_json_fields:
+          fields: ["log"]
+          target: ""
+
+    json.message_key: log
+    json.keys_under_root: true
+    json.add_error_key: true
+
+output.logstash:
+    hosts: ["logstash:5044"]
+
+setup.kibana:
+  host: "kibana:5601"

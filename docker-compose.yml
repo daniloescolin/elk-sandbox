@@ -25,21 +25,29 @@ services:
   logstash:
     image: logstash:7.6.0
     container_name: logstash
+    ports:
+      - 5044:5044
     depends_on:
       - elasticsearch
     networks:
       - elk-cluster-sandbox
     volumes:
-      - ./example-logs/:/example-logs
-      - ./logstash/:/usr/share/logstash/pipeline/
+      - ./logstash/:/usr/share/logstash/pipeline/:ro
+      - ./example-logs/grok-logs/:/var/log/example/
 
-  metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.6.0
-    container_name: metricbeat
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.6.0
+    entrypoint: "filebeat -e -strict.perms=false" # to be able to add config
+    container_name: filebeat
+    user: root
     depends_on:
+      - logstash
       - elasticsearch
     networks:
       - elk-cluster-sandbox
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./example-logs/json-logs/:/var/log/example/
 
 networks:
   elk-cluster-sandbox:
