@@ -8,6 +8,8 @@ image:
   repository: docker.elastic.co/kibana/kibana
   pullPolicy: IfNotPresent
 
+namespace: monitoring
+
 service:
   type: ClusterIP
   port: 5601

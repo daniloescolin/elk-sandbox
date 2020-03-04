@@ -8,6 +8,8 @@ image:
   repository: docker.elastic.co/beats/filebeat
   pullPolicy: IfNotPresent
 
+namespace: monitoring
+
 securityContext:
   runAsUser: 0 # allows to read docker logs from mount
   # capabilities:

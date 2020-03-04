@@ -8,9 +8,7 @@ image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+namespace: monitoring
 
 service:
   type: ClusterIP

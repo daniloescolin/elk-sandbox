@@ -16,3 +16,8 @@ After the start of all docker containers, you can find some example logs in Kiba
 
 Known bugs:
 1) Updating logs in example log files triggers full file reload, so every log will appear for the second time
+
+
+
+Kubernetes
+1) create "monitoring" namespace
