@@ -3,8 +3,8 @@ filebeat.inputs:
     paths:
       - "/var/lib/docker/containers/*/*.log"
     processors:
-      # - add_kubernetes_metadata:
-          # in_cluster: true
+      - add_kubernetes_metadata:
+          in_cluster: true
       - decode_json_fields:
           fields: ["log"]
           target: ""

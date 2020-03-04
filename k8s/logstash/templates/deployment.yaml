@@ -30,14 +30,8 @@ spec:
           volumeMounts:
             - name: logstash-config
               mountPath: /usr/share/logstash/pipeline/
-            - name: logstash-example-logs
-              mountPath: /var/log/example/
       volumes:
         - name: logstash-config
           configMap:
             defaultMode: 420
             name: {{ include "logstash.fullname" . }}
-        - name: logstash-example-logs
-          configMap:
-            defaultMode: 420
-            name: "{{ include "logstash.fullname" . }}-example-logs"

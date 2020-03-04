@@ -1,12 +1,12 @@
 kubectl create namespace monitoring
 
-helm upgrade --install elasticsearch $(dirname $0)/../elasticsearch monitoring
+helm upgrade --install elasticsearch $(dirname $0)/../elasticsearch
 sleep 5
 
-helm upgrade --install kibana $(dirname $0)/../kibana monitoring
+helm upgrade --install kibana $(dirname $0)/../kibana
 sleep 5
 
-helm upgrade --install logstash $(dirname $0)/../logstash monitoring
+helm upgrade --install logstash $(dirname $0)/../logstash
 sleep 5
 
-helm upgrade --install filebeat $(dirname $0)/../filebeat monitoring
+helm upgrade --install filebeat $(dirname $0)/../filebeat

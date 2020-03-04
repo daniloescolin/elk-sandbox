@@ -1,14 +1,6 @@
 input {
-  file {
-    path => "/var/log/example/*.log"
-    start_position => "beginning"
-    sincedb_path => "/dev/null"
-    add_field => { "[@metadata][source_type]" => "file" }
-  }
-
   beats {
     port => 5044
-    add_field => { "[@metadata][source_type]" => "beats" }
   }
 }
 
@@ -16,23 +8,20 @@ filter {
   grok {
     match => { "message" => "%{WORD:someword} %{WORD:somenum}" }
   }
-
-  # date {
-    # match => [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
-  # }
 }
 
 output {
-  if [@metadata][source_type] == "file" {
+  if [kubernetes][namespace] == "monitoring"
+  or [kubernetes][namespace] == "kube-system" {
     elasticsearch {
       hosts => ["elasticsearch:9200"]
-      index => "logstash-from-file-%{+YYYY.MM.dd}"
+      index => "infrastructure-%{+YYYY.MM.dd}"
     }
   }
-  else if [@metadata][source_type] == "beats" {
+  else {
     elasticsearch {
       hosts => ["elasticsearch:9200"]
-      index => "logstash-from-beats-%{+YYYY.MM.dd}"
+      index => "else-logs-%{+YYYY.MM.dd}"
     }
   }
 }

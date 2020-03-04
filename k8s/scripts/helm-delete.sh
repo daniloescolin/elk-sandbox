@@ -1,6 +1,6 @@
-helm delete elasticsearch --namespace monitoring
-helm delete kibana --namespace monitoring
-helm delete logstash --namespace monitoring
-helm delete filebeat --namespace monitoring
+helm delete elasticsearch
+helm delete kibana
+helm delete logstash
+helm delete filebeat
 
 kubectl delete namespace monitoring

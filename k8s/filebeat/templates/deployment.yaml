@@ -15,6 +15,7 @@ spec:
       labels:
         {{- include "filebeat.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "filebeat.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
