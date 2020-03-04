@@ -21,6 +21,8 @@ services:
       - elasticsearch
     networks:
       - elk-cluster-sandbox
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/logstash.yml:ro
 
   logstash:
     image: logstash:7.6.0
