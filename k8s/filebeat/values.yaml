@@ -1,16 +1,25 @@
-# Default values for logstash.
+# Default values for filebeat.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: docker.elastic.co/logstash/logstash
+  repository: docker.elastic.co/beats/filebeat
   pullPolicy: IfNotPresent
+
+securityContext:
+  runAsUser: 0 # allows to read docker logs from mount
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   type: ClusterIP
-  port: 5044
+  port: 80
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -23,3 +32,4 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
