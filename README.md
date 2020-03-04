@@ -1,8 +1,8 @@
-Sandbox logging infrastructure using Docker Compose
+Sandbox logging infrastructure using Docker Compose (`docker-compose/` folder) and Kubernetes (`k8s/` folder)
 
-To run execute following command:
+Execute following command to run docker-compose version:
 ```
-docker-compose up
+docker-compose -f docker-compose/docker-compose.yml up
 ```
 
 Description:
