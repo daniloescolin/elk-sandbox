@@ -21,6 +21,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SERVER_BASEPATH
+              value: /kibana
           ports:
             - name: http
               containerPort: 5601
