@@ -1,3 +1,12 @@
-{"@timestamp":"2020-03-03T11:33:11.9478479+03:00","level":"Fatal","message":"Applicationstartupexception"}
-{"@timestamp":"2020-03-03T11:35:20.2170991+03:00","level":"Information","message":"Startin\"Europe/Moscow\""}
-{"@timestamp":"2020-03-03T11:36:22.9897006+03:00","level":"Warning","message":"TheLINQexpression'\"whereNot([x].Result.IsReady)\"'couldnotbetranslatedandwillbeevaluatedlocally."}
+{"log":"\n","stream":"stdout","time":"2018-01-11T08:12:18.6298524Z"}
+{"log":"\n","stream":"stdout","time":"2018-01-11T08:12:19.2633836Z"}
+{"log":"  .   ____          _            __ _ _\n","stream":"stdout","time":"2018-01-11T08:12:19.2636263Z"}
+{"log":" /\\\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\\n","stream":"stdout","time":"2018-01-11T08:12:19.2636359Z"}
+{"log":"( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\ \\\n","stream":"stdout","time":"2018-01-11T08:12:19.2638339Z"}
+{"log":" \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )\n","stream":"stdout","time":"2018-01-11T08:12:19.2640029Z"}
+{"log":"  '  |____| .__|_| |_|_| |_\\__, | / / / /\n","stream":"stdout","time":"2018-01-11T08:12:19.2640115Z"}
+{"log":" =========|_|==============|___/=/_/_/_/\n","stream":"stdout","time":"2018-01-11T08:12:19.2641995Z"}
+{"log":" :: Spring Boot ::        (v1.5.9.RELEASE)\n","stream":"stdout","time":"2018-01-11T08:12:19.273083Z"}
+{"log":"\n","stream":"stdout","time":"2018-01-11T08:12:19.2731073Z"}
+{"log":"{\"@timestamp\":\"2018-01-11T08:12:19.584+00:00\",\"@version\":1,\"message\":\"Starting DemoApplication v0.0.1-SNAPSHOT on caa07cb53010 with PID 1 (/app.jar started by root in /)\",\"logger_name\":\"com.example.demo.DemoApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n","stream":"stdout","time":"2018-01-11T08:12:19.6096127Z"}
+{"log":"{\"@timestamp\":\"2018-01-11T08:12:19.619+00:00\",\"@version\":1,\"message\":\"No active profile set, falling back to default profiles: default\",\"logger_name\":\"com.example.demo.DemoApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n","stream":"stdout","time":"2018-01-11T08:12:19.6199775Z"}

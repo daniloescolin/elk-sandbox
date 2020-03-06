@@ -6,7 +6,13 @@ input {
 
 filter {
   grok {
-    match => { "message" => "%{WORD:someword} %{WORD:somenum}" }
+    match => { "log" => "^%{TIMESTAMP_ISO8601:service_time}\s*%{LOGLEVEL:level}" }
+  }
+
+  if [kubernetes][namespace] == "web" and ![kubernetes][labels][app][kubernetes] {
+    mutate {
+      rename => { "[kubernetes][labels][app]" => "[kubernetes][labels][app][kubernetes][io/name]" }
+    }
   }
 }
 
@@ -16,6 +22,12 @@ output {
     elasticsearch {
       hosts => ["elasticsearch:9200"]
       index => "infrastructure-%{+YYYY.MM.dd}"
+    }
+  }
+  if [kubernetes][namespace] == "web" {
+    elasticsearch {
+      hosts => ["elasticsearch:9200"]
+      index => "web-%{+YYYY.MM.dd}"
     }
   }
   else {

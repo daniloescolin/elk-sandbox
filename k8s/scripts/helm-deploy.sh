@@ -1,5 +1,3 @@
-kubectl create namespace monitoring
-
 helm upgrade --install elasticsearch $(dirname $0)/../elasticsearch
 sleep 5
 
