@@ -1,0 +1,87 @@
+Filebeat various configurations for Kubernetes with Docker. (tested on filebeat 6.4.2)
+
+Docker stores logs in following format
+{
+  "log": "your log message",
+  "stream": "stdout|stderr|etc",
+  "time": "2019-01-01T11:11:11.111111111Z"
+}
+
+1) Type: LOG with multiline pattern and keys_under_root = TRUE
+Description:
+Full log message stored in `log` field, `log` field parsed as JSON and all fields retrieved to log's root level
+
+Cons:
+Multiline concats logs with \n character, so long JSON logs cannot be parsed correctly
+
+``` yaml
+  - type: log
+    paths:
+     - "/var/lib/docker/containers/*/*.log"
+    processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+      - decode_json_fields:
+          fields: ["log"]
+          target: ""
+
+    json.message_key: log
+    json.keys_under_root: true
+    json.add_error_key: true
+
+    multiline.pattern: '^[\d]{4}-[\d]{2}-[\d]{2}\s[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}\s{1,2}[A-Z]{4,5}\s|^{".?timestamp":'
+    multiline.match: after
+    multiline.negate: true
+```
+
+2) Type: Log with multiline pattern and keys_under_root = FALSE
+
+Cons:
+Multiline concats logs with \n character, so long JSON logs cannot be parsed correctly
+
+Description:
+Full log message stored in `json.log` field, `log` field parsed as JSON and all fields retrieved to log's root level
+
+```
+  - type: log
+    paths:
+     - "/var/lib/docker/containers/*/*.log"
+    processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+      - decode_json_fields:
+          fields: ["json.log"]
+          target: ""
+
+    json.message_key: "log"
+    json.add_error_key: true
+
+    multiline.pattern: '^[\d]{4}-[\d]{2}-[\d]{2}\s[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}\s{1,2}[A-Z]{4,5}\s|^{".?timestamp":'
+    multiline.match: after
+    multiline.negate: true
+
+    close_inactive: 5m
+```
+
+3) Type: Docker without decode_json_fields filter
+decode_json_fields not needed because Docker type extracts log body from docker logs by itself and filebeat knows how to work with JSON out of the box.
+
+Cons:
+1) docker full log field called `message` and this name intersects with Serilog field
+2) full log message is missing
+
+```
+  - type: docker
+    containers:
+      path: "/var/lib/docker/containers"
+      ids:
+        - "*"
+    combine_partial: true                       # default = true, joins splitted logs
+    processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+
+    json.message_key: "serilog"                 # field on which multiline will be used
+    json.keys_under_root: true                  # конфликтует с decode_json_fields.target
+    json.add_error_key: true
+```

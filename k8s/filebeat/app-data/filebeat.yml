@@ -1,13 +1,44 @@
 filebeat.prospectors:
-  - type: log
-    paths:
-     - '/var/lib/docker/containers/*/*.log'
+  # - type: log
+    # paths:
+     # - "/var/lib/docker/containers/*/*.log"
+    # processors:
+      # - add_kubernetes_metadata:
+          # in_cluster: true
+      # - decode_json_fields:
+          # fields: ["json.log"]
+          # target: ""
+
+    # json.message_key: "log"
+    # json.keys_under_root: true
+    # json.add_error_key: true
+
+    # multiline.pattern: '^[\d]{4}-[\d]{2}-[\d]{2}\s[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}\s{1,2}[A-Z]{4,5}\s|^{".?timestamp":'
+    # multiline.match: after
+    # multiline.negate: true
+
+    # close_inactive: 5m
+
+  - type: docker
+    containers:
+      path: "/var/lib/docker/containers"
+      ids:
+        - "*"
+    combine_partial: true                       # default = true, joins splitted logs
     processors:
       - add_kubernetes_metadata:
           in_cluster: true
-          fields: ['log']
-          target: ""
-      - decode_json_fields:
+      # - decode_json_fields:
+          # fields: ["message"]
+          # target: "serilog"
+
+    # json.message_key: "serilog"                 # field on which multiline will be used
+    json.keys_under_root: true                  # конфликтует с decode_json_fields.target
+    json.add_error_key: true
+
+    # multiline.pattern: '^[\d]{4}-[\d]{2}-[\d]{2}\s[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}\s{1,2}[A-Z]{4,5}\s|^{".?timestamp":'
+    # multiline.match: after
+    # multiline.negate: true
 
     close_inactive: 5m
 
